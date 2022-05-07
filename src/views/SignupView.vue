@@ -79,6 +79,7 @@
 import CSignComp from '@/components/CSignComp.vue'
 import axios from 'axios';
 import cookies from 'vue-cookies'
+import router from '@/router'
 
     export default {
         name :"SignupView",
@@ -116,6 +117,7 @@ import cookies from 'vue-cookies'
             }).then((response)=>{
                 console.log("successs");
                 cookies.set('sessionToken' , response.data.token)
+                router.push('/login')
             }).catch((error)=>{
                 console.log(error.response.status);
                

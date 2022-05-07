@@ -1,6 +1,7 @@
 <template>
     <div>
-         <router-link to="/" >Home</router-link> 
+         <!-- <router-link to="/" >Home</router-link> -->
+         <v-form>
   <v-card flat>
     <v-snackbar
       v-model="snackbar"
@@ -51,12 +52,12 @@
             >
               <template v-slot:label>
                 <div>
-                  Bio <small>(optional)</small>
+                  Bio 
                 </div>
               </template>
             </v-textarea>
           </v-col>
-          <v-col
+           <v-col
             cols="12"
             sm="6"
           >
@@ -68,7 +69,7 @@
               label="City"
               required
             ></v-select>
-          </v-col>
+          </v-col> 
           <v-col
             cols="12"
             sm="6"
@@ -91,7 +92,7 @@
           sm="6"
         >
            <v-text-field
-            v-model="password"
+            v-model="form.password"
             :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show3 ? 'text' : 'password'"
             name="input-10-2"
@@ -100,6 +101,17 @@
             @click:append="show3 = !show3"
           ></v-text-field>
         </v-col>
+
+          <v-col
+          cols="12"
+          sm="6"
+        >
+         <v-text-field
+        v-model="form.phoneNum"
+        color="blue darken-2"
+        label="Phone number"
+      ></v-text-field>
+          </v-col>
           
           <v-col cols="12">
             <v-checkbox
@@ -137,8 +149,8 @@
           text
           color="primary"
           type="submit"
-          
-        >
+         @click="restRegister"  
+  >
           Register
         </v-btn>
       </v-card-actions>
@@ -196,19 +208,28 @@
       </v-card>
     </v-dialog>
   </v-card>
+  </v-form> 
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+ import cookies from 'vue-cookies'
+ import router from '@/router'
+
     export default {
         name : 'RestSignupView',
          data () {
       const defaultForm = Object.freeze({
-        restName: '',
+        restName: "",
         address: '',
         bio: '',
-        city: '',
+         city: '',
         terms: false,
+        email : "",
+        password :"",
+        phoneNum: ""
+        
       })
 
       return {
@@ -219,7 +240,7 @@
           emailMatch: () => (`The email and password you entered don't match`),
 
         },
-        city: ['Calgary', 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg'],
+         city: ['Calgary', 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg'],
         conditions: false,
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.',
         show3:false,
@@ -227,6 +248,7 @@
         snackbar: false,
         terms: false,
         defaultForm,
+        
       }
     },
   
@@ -236,8 +258,8 @@
         return (
           this.form.restName &&
           this.form.address &&
-          this.form.city &&
-          this.form.terms
+           this.form.city &&
+          this.form.terms 
         )
       },
     },
@@ -252,12 +274,35 @@
         this.resetForm()
       },
       restRegister(){
+        console.log("hello");
           axios.request({
-              url: process.env.VUE_APP_API_URL + "client" ,
+              url: process.env.VUE_APP_API_URL + "restaurant" ,
+              method: "POST",
+              headers: {
+               'x-api-key': process.env.VUE_APP_API_KEY
+                },
+                data : {
+                  name : this.form.restName,
+                  address : this.form.address,
+                  bio : this.form.bio,
+                  city : this.form.city,
+                  email : this.form.email,
+                  password :this.form.password,
+                  phoneNum : this.form.phoneNum,
+                }
+          }).then((response)=>{
+            cookies.set('sessionToken' , response.data.token)
+            console.log("hi");
+            router.push('/')
+            console.log(response.data.token);
+          }).catch((error)=>{
+            console.log(error.response.data);
+            console.log("error");
           })
+          }
       }
-    },
-  }
+    }
+  
         
     
 </script>

@@ -6,7 +6,7 @@
     <v-container fluid >
       <v-alert v-if="isAlert" type="error"> Wrong username or password</v-alert>
       <v-alert v-if="isLoggedIn" type="success">
-        Login successful
+        Login successful , welcome {{email}}
       </v-alert>
       <v-col
           cols="8"
@@ -61,11 +61,14 @@
 
 import axios from 'axios'
  import cookies from 'vue-cookies'
+ import router from '@/router'
 import CSignComp from '@/components/CSignComp.vue'
+
 
     export default {
   components: { CSignComp },
         name : "LoginView",
+       
         data () {
       return {
         email:'',
@@ -92,10 +95,11 @@ import CSignComp from '@/components/CSignComp.vue'
             password:this.password,
           },
         }).then((response)=>{
-            cookies.get('sessionToken',response.data.token ),
+            cookies.set('sessionToken',response.data.token ),
             this.isAlert = false,
             this.isLoggedIn = true,
             console.log(response);
+            router.push('/cprofile')
         }).catch((error)=>{
           this.isAlert = true;
           console.log(error.response.status);
@@ -111,6 +115,7 @@ import CSignComp from '@/components/CSignComp.vue'
 <style lang="scss" scoped>
 h1{
       text-align: center;
+      background-color : white;
       
     }
    #signup{

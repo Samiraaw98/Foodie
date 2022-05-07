@@ -4,6 +4,9 @@ import LoginView from '@/views/LoginView'
 import SignupView from '@/views/SignupView'
 import RestSignupView from '@/views/RestSignupView'
 import RestLoginView from '@/views/RestLoginView'
+import ClientProfile from '@/views/ClientProfile'
+import ClientSettings from '@/views/ClientSettings'
+import RestProfile from '@/views/RestProfile'
 
 
 Vue.use(VueRouter)
@@ -28,6 +31,21 @@ const routes = [
     path: '/rlogin',
     name: 'rlogin',
     component: RestLoginView
+  },
+  {
+    path: '/cprofile',
+    name: 'cprofile',
+    component: ClientProfile
+  },
+  {
+    path: '/csettings',
+    name: 'csettings',
+    component: ClientSettings
+  },
+  {
+    path: '/rprofile',
+    name: 'rprofile',
+    component: RestProfile
   },
   
 
