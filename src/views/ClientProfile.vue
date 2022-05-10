@@ -11,13 +11,14 @@
        > 
       Log out 
       </v-btn>
-        </nav>
-
-         <!-- <button @click="profile">profile</button> | -->
-          <button @click="getInfo">info</button>  
-        <h2> Hello {{username}}</h2>
-
+        </nav > 
+        
+        <h2> Welcome {{username.username}}</h2>
+        <h3> {{username.firstName}} {{username.lastName}} </h3>
+        <h3> {{username.email}} </h3>
+       
     
+
         </div>
 
       
@@ -36,14 +37,17 @@
             ...mapState(useMainStore,['username']),
             ...mapState(useMainStore,['initial'])
         },
+        mounted (){
+            this.getInfo();
+        },
         data (){
             return {
-                username : this.username
+                username : {},
             }
             
 
         },
-        methods : {
+        methods: {
             getInfo(){
                 axios.request({
                     url:process.env.VUE_APP_API_URL +"client",
@@ -55,7 +59,7 @@
                 }).then((response)=>{
                      cookies.get('sessionToken',response.data);
                     console.log(response.data);
-                   this.username = response.data.username;
+                  this.username = response.data[0];
                     console.log("success");
                     
                 }).catch((error)=>{
@@ -68,6 +72,9 @@
                axios.request({
                      method : "GET",
                      url : process.env.VUE_APP_API_URL + "menu",
+                     params : {
+                         username : this.username
+                     },
                     headers : {
                         'x-api-key':process.env.VUE_APP_API_KEY,
                     },
@@ -75,6 +82,7 @@
                     cookies.get ('sessionToken',)
                     console.log(response);
                      console.log("success");
+                    
                }).catch((error)=>{
                     console.log(error);
                  })
@@ -113,20 +121,22 @@
 </script>
 
 <style lang="scss" scoped>
-html{
-    background-color: white;
-}
+
 nav{
     display: grid;
     grid-template-columns: 5fr 1fr;
-    background-color: rgba(120, 31, 31, 0.859);
+    background-color: rgb(27, 27, 171);
     color: white;
 }
 h1{
     text-align: center;
     font-size: 3em;
 }
-h2{
-    text-align: center;
+ h2{
+     text-align: center;
+ }
+#profileCard{
+   
+
 }
 </style>

@@ -52,7 +52,7 @@
 
     </v-container>
     </v-form>
-    <CSignComp/>
+
     </div>
 </template>
 
@@ -62,11 +62,11 @@
 import axios from 'axios'
  import cookies from 'vue-cookies'
  import router from '@/router'
-import CSignComp from '@/components/CSignComp.vue'
+
 
 
     export default {
-  components: { CSignComp },
+
         name : "LoginView",
        
         data () {
@@ -113,31 +113,34 @@ import CSignComp from '@/components/CSignComp.vue'
 </script>
 
 <style lang="scss" scoped>
+*{
+  background-color: lightslategrey;
+}
 h1{
       text-align: center;
-      background-color : white;
+      background-color : rgb(255, 255, 255);
       
     }
    #signup{
        button{
-           background-color: rgb(124, 28, 28);
+           background-color: navy;
            border-radius: 25px;
            width: 100px;
            height: 30px;
            color: white;
            font-size: 1.3em;
-            border: 3px solid rgb(111, 71, 21);
+            border: 1.5px solid rgb(207, 207, 207);
        }
    }
     #restsignup{
        button{
-           background-color: rgb(124, 28, 28);
+           background-color: navy;
            border-radius: 25px;
            width: 100px;
            height: 30px;
            color: white;
            font-size: 1.3em;
-            border: 3px solid rgb(111, 71, 21);
+            border: 1.5px solid rgb(207, 207, 207);
        }
        p{
            font-weight: bold;
