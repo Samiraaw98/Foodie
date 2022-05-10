@@ -81,7 +81,7 @@ import router from '@/router'
                     this.isAlert = false,
                     this.isLoggedIn = true,
                     console.log(response);
-                    router.push('/rprofle')
+                    router.push('/rprofile')
                 }).catch((error)=>{
                     this.isAlert = true;
                     console.log(error.response.status);

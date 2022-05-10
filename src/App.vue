@@ -25,8 +25,6 @@ export default {
 </script>
 <style lang="scss" >
  
-     html{
-        background-color: bisque;
-    }
+     
    
 </style>

@@ -1,6 +1,5 @@
 <template>
     <div>
-         <div>
          <router-link to="/rlogin" >Home</router-link> |
           <router-link to="/rprofile" >Profile</router-link> 
         <nav id="bar">
@@ -50,13 +49,16 @@
             </div>
             </v-container>
         </v-form>
-    </div>
-        
         <v-btn
         elevation="2"
         color="yellow"
          @click ="restProfile">Submit</v-btn> 
-         
+        <ul>
+          <li v-for ="name in name" :key= "name">
+            {{name}}
+          </li>
+          li>
+        </ul>
     </div>
 </template>
 
@@ -66,43 +68,44 @@ import cookies from 'vue-cookies'
 
     export default {
         name : "RestProfile",
-//         data:() =>({
-//             name : "",
-//             description : "",
-//             price : "$"+"" ,
-//         }),
-//         methods : {
-//             restProfile(){
-//                 axios.request({
-//                     url : process.env.VUE_APP_API_URL + "menu",
-//                     methods : "POST",
-//                     headers : {
-//                         token : "sessionToken",
-//                         'x-api-key' : process.env.VUE_APP_API_KEY,
-//                     },
-//                     data : {
-//                         name : this.name,
-//                         description : this.description,
-//                         price : this.price
-//                     },
-//                 }).then ((response)=>{
-//                     cookies.set('sessionToken',response.data.token)
-//                     console.log(response);
-//                 }).catch((error)=>{
-//                     console.log(error.response.status);
-//                 })
+        data:() =>({
+            name : "",
+            description : "",
+            price : "$"+"" ,
+        }),
+        methods : {
+            restProfile(){
+                axios.request({
+                    url : process.env.VUE_APP_API_URL + "menu",
+                    methods : "POST",
+                    headers : {
+                        token : "sessionToken",
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                    },
+                    data : {
+                        name : this.name,
+                        description : this.description,
+                        price : this.price
+                    },
+                }).then ((response)=>{
+                  this.info = response.data(),
+                    cookies.set('sessionToken',response.data.token)
+                    console.log(response);
+                }).catch((error)=>{
+                    console.log(error.response.status);
+                })
 
                 
-//             }
-//         }
-//     }
-// </script>
+            }
+        }
+    }
+</script>
 
-// <style lang="scss" scoped>
-// #bar{
-//     padding-bottom: 50px;
-// }
-// .box{
-//     border: 1px solid black;
-// }
-// </style>
+<style lang="scss" scoped>
+#bar{
+    padding-bottom: 50px;
+}
+.box{
+    border: 1px solid black;
+}
+</style>
